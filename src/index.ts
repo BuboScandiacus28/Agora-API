@@ -14,7 +14,9 @@ app.use(cors());
 console.log(__dirname);
 
 useExpressServer(app, {
-  controllers: [path.join(__dirname, "/controllers/*.ts")],
+  controllers: [path.join(__dirname, "/controllers/**/*.ts")],
+  middlewares: [path.join(__dirname, "/middlewares/**/*.ts")],
+  defaultErrorHandler: false,
 });
 
 app.listen(port, () => console.log(`Running on port ${port}`));
