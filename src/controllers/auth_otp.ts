@@ -1,7 +1,8 @@
-import { Controller, Param, Get, Post, Body } from "routing-controllers";
+import { Controller, Param, Get, Post, Body, Res } from "routing-controllers";
 import "reflect-metadata";
 import { PostOne } from "../models/auth_otp";
 import AuthOtpActions from "../actions/auth_otp";
+import { Response } from "express";
 
 @Controller()
 export class AuthOtp {
@@ -17,13 +18,12 @@ export class AuthOtp {
   }
 
   @Post("/test1")
-  post(@Body() payload: PostOne): string {
-    AuthOtpActions.add({
+  post(@Body() payload: PostOne, @Res() res: Response): Promise<void> {
+    return AuthOtpActions.add({
       ...payload,
       otp: 1234,
-    }).then((res) => {
-      console.log(res);
+    }).then((result) => {
+      res.send(result);
     });
-    return "Saving user...";
   }
 }
